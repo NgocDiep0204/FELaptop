@@ -4,10 +4,10 @@
     </div>
     <div class="flex flex-col items-center justify-center min-h-screen px-5">
     <div class="grid grid-flow-row md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-10 max-w-6xl" v-if="models">
-      <div class="shadow-lg rounded-lg w-70" v-for="(model, index) in models" :key="index">
-        <p class="flex justify-center w-full" ><img :src="model.modelImgUrl" alt="" class="w-44 h-40" @click="ProductView(model.modelID)"></p>
+      <div class="shadow-lg rounded-lg w-70" v-for="(product, index) in products" :key="index">
+        <p class="flex justify-center w-full" ><img :src="product.modelImgUrl" alt="" class="w-44 h-40" @click="ProductView(product.productId)"></p>
         <div class="p-6 flex justify-center w-full">
-          <h3>{{ model.modelName }}</h3>
+          <h3>{{ product.productName }}</h3>
         </div>
        
         <div class="flex flex-row justify-between items-center m-5 space-x-4 p-2">
@@ -37,6 +37,18 @@ export default{
 
     }
   },
+  computed: {
+    ...mapState(['products']),
+  },
+  mounted(){
+    this.GetProducts()
+  },
+  methods: {
+    ...mapActions(['GetProducts']),
+    async ProductView(ProductId) {
+        this.$router.push({ name: 'ProductDetail', params: { id: ProductId } });
+      },
+  }
   
 }
 </script>
