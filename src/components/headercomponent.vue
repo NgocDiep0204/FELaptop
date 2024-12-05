@@ -78,8 +78,6 @@ export default {
     async created() {
         if(this.username){
             await this.GetUser(this.username);
-            console.log("user:", this.user);
-
         }
     },
     methods:{
