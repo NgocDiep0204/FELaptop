@@ -1,73 +1,88 @@
 <template>
-  <div class="user-info" v-if="user">
-    <h2>Thông tin người dùng</h2>
-    <p><span class="label">Tên đăng nhập:</span> {{ user.userName }}</p>
-    <p><span class="label">Họ tên:</span> {{ user.fullName }}</p>
-    <p><span class="label">Số điện thoại:</span> {{ user.phoneNumber }}</p>
-    <p><span class="label">Địa chỉ:</span> {{ user.address }}</p>
+  <div class="max-w-md mx-auto mt-12 p-6 border border-gray-300 rounded-lg shadow-md">
+    <h2 class="text-xl font-bold mb-4 text-gray-800">Thông tin người dùng</h2>
+    <p class="mb-2"><span class="font-semibold">Tên đăng nhập:</span> {{ user.userName }}</p>
+    <p class="mb-2"><span class="font-semibold">Họ tên:</span> {{ user.fullName }}</p>
+    <p class="mb-2"><span class="font-semibold">Số điện thoại:</span> {{ user.phoneNumber }}</p>
+    <p class="mb-4"><span class="font-semibold">Địa chỉ:</span> {{ user.address }}</p>
 
     <!-- Buttons -->
-    <div class="buttons mt-4">
-      <button @click="showUpdateInfoForm" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
+    <div class="flex space-x-4">
+      <button @click="showUpdateInfoForm(user)" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
         Cập nhật thông tin
       </button>
-      <button @click="showChangePasswordForm" class="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600 ml-2">
+      <button @click="showChangePasswordForm" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
         Đổi mật khẩu
       </button>
     </div>
 
     <!-- Update Info Modal -->
-    <div v-if="showUpdateInfo" class="modal">
-      <div class="modal-content">
-        <h3>Cập nhật thông tin</h3>
-        <form @submit.prevent="updateUserInfo">
-          <label>Họ tên:</label>
-          <input v-model="editUser.fullName" class="input" />
-          <label>Số điện thoại:</label>
-          <input v-model="editUser.phoneNumber" class="input" />
-          <label>Địa chỉ:</label>
-          <input v-model="editUser.address" class="input" />
-          <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded mt-4">
-            Lưu
-          </button>
-          <button @click="closeUpdateInfoForm" class="bg-gray-500 text-white py-2 px-4 rounded mt-4 ml-2">
-            Hủy
-          </button>
-        </form>
+   <!-- Update Info Modal -->
+<div v-if="showUpdateInfo" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center">
+  <div class="bg-white p-6 rounded-lg shadow-lg w-96 relative" inert>
+    <button @click="closeUpdateInfoForm" class="absolute top-2 right-2 text-gray-500 hover:text-gray-800">
+      ✖
+    </button>
+    <h3 class="text-lg font-bold mb-4">Cập nhật thông tin</h3>
+    <form @submit.prevent="updateUserInfo">
+      <div class="mb-4">
+        <label class="block font-semibold mb-1">Họ tên:</label>
+        <input v-model="editUser.fullName" class="w-full border border-gray-300 rounded p-2" />
       </div>
-    </div>
+      <div class="mb-4">
+        <label class="block font-semibold mb-1">Số điện thoại:</label>
+        <input v-model="editUser.phoneNumber" class="w-full border border-gray-300 rounded p-2" />
+      </div>
+      <div class="mb-4">
+        <label class="block font-semibold mb-1">Địa chỉ:</label>
+        <input v-model="editUser.address" class="w-full border border-gray-300 rounded p-2" />
+      </div>
+      <div class="flex justify-end space-x-2">
+        <button type="button" @click="closeUpdateInfoForm" class="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600">
+          Hủy
+        </button>
+        <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+          Lưu
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
 
-    <!-- Change Password Modal -->
-    <div v-if="showChangePassword" class="modal">
-      <div class="modal-content">
-        <h3>Đổi mật khẩu</h3>
-        <form @submit.prevent="changeUserPassword">
-          <label>Mật khẩu cũ:</label>
-          <input type="password" v-model="password.old" class="input" />
-          <label>Mật khẩu mới:</label>
-          <input type="password" v-model="password.new" class="input" />
-          <button type="submit" class="bg-green-500 text-white py-2 px-4 rounded mt-4">
-            Đổi mật khẩu
-          </button>
-          <button @click="closeChangePasswordForm" class="bg-gray-500 text-white py-2 px-4 rounded mt-4 ml-2">
-            Hủy
-          </button>
-        </form>
+<!-- Change Password Modal -->
+<div v-if="showChangePassword" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center">
+  <div class="bg-white p-6 rounded-lg shadow-lg w-96 relative" inert>
+    <button @click="closeChangePasswordForm" class="absolute top-2 right-2 text-gray-500 hover:text-gray-800">
+      ✖
+    </button>
+    <h3 class="text-lg font-bold mb-4">Đổi mật khẩu</h3>
+    <form @submit.prevent="changeUserPassword(user)">
+      <div class="mb-4">
+        <label class="block font-semibold mb-1">Mật khẩu cũ:</label>
+        <input type="password" v-model="password.currentPassword" class="w-full border border-gray-300 rounded p-2" />
       </div>
-    </div>
+      <div class="mb-4">
+        <label class="block font-semibold mb-1">Mật khẩu mới:</label>
+        <input type="password" v-model="password.newPassword" class="w-full border border-gray-300 rounded p-2" />
+      </div>
+      <div class="flex justify-end space-x-2">
+        <button type="button" @click="closeChangePasswordForm" class="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600">
+          Hủy
+        </button>
+        <button type="submit" class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600">
+          Đổi mật khẩu
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
   </div>
 </template>
-
   <script>
   import { mapState, mapActions } from "vuex";
+  import axiosClient from "../../axiosClient";
   export default {
-    async created() {
-        // if(this.username){
-        //     await this.GetUser(this.username).then(() => {
-                 console.log("User loaded:", this.user);
-        //     });
-        // }
-    },
     computed: {
       ...mapState(['user']),
     },
@@ -75,38 +90,83 @@
     return {
       showUpdateInfo: false,
       showChangePassword: false,
-      editUser: { ...this.user }, // Sao chép thông tin user để chỉnh sửa
+      editUser: null,
       password: {
-        old: '',
-        new: ''
+        username: '',
+        currentPassword: '',
+        newPassword: ''
       }
     };
   },
   methods: {
     ...mapActions(['GetUser']),
 
-    showUpdateInfoForm() {
-      this.showUpdateInfo = true;
+    showUpdateInfoForm(user) {
+      if(user){
+        this.editUser = user
+        this.showUpdateInfo = true;
+      }
     },
     closeUpdateInfoForm() {
       this.showUpdateInfo = false;
     },
-    updateUserInfo() {
-      // Gửi thông tin cập nhật qua API hoặc Vuex action
-      console.log('Thông tin cập nhật:', this.editUser);
-      this.closeUpdateInfoForm();
-    },
+    async updateUserInfo() {
+    try {
+        console.log('Cập nhật thông tin:', this.editUser);
+        
+        // Gửi yêu cầu cập nhật
+        const response = await axiosClient.put(`Applications/UpdateUser`, this.editUser);
+        
+        // Kiểm tra phản hồi
+        if (response.status === 200) {
+            console.log('Cập nhật thành công:', response.data);
+            alert('Cập nhật thông tin thành công!');
+            // Lấy lại thông tin người dùng mới nhất
+            await this.GetUser(this.editUser.userName);
+            
+            // Đóng form
+            this.closeUpdateInfoForm();
+        } else {
+            console.error('Cập nhật thất bại:', response.status);
+        }
+    } catch (error) {
+        console.error('Lỗi khi cập nhật thông tin:', error.message || error);
+    }
+},
     showChangePasswordForm() {
       this.showChangePassword = true;
     },
     closeChangePasswordForm() {
       this.showChangePassword = false;
     },
-    changeUserPassword() {
-      // Gửi yêu cầu đổi mật khẩu qua API hoặc Vuex action
-      console.log('Đổi mật khẩu:', this.password);
-      this.closeChangePasswordForm();
+    async changeUserPassword(user) {
+    try {
+        
+        // Gắn username vào payload
+        this.password.username = user.userName;
+        console.log('Đổi mật khẩu:', this.password);
+
+
+        // Gửi yêu cầu đổi mật khẩu
+        const response = await axiosClient.post(`Applications/ChangePassword`, this.password);
+
+        // Kiểm tra phản hồi
+        if (response.status === 200) {
+            alert("Đổi mật khẩu thành công!");
+            this.closeChangePasswordForm();
+        } 
+    } catch (error) {
+        if(error.response){
+            switch (error.response.status) {
+                case 409:
+                    alert("Mật khẩu cũ không chính xác!");
+                    break;
+                default:
+                    alert("Đã xảy ra lỗi không xác định!");
+            }
+        }
     }
+},
   },
   };
   </script>
