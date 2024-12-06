@@ -87,7 +87,7 @@ export default {
      
       async updateCartDetail(orderId, productId, quantity) {
         this.cartdetailUP.orderId = orderId
-        this.cartdetailUP.productId = productId
+        this.cartdetailUP.productId = productId 
         this.cartdetailUP.quantity = quantity
         try{
         const response = await axiosClient.put('OrderDetail/UpdateCartDetail', this.cartdetailUP);
@@ -158,7 +158,7 @@ export default {
         const isChecked = event.target.checked;
         const amount = this.cartdetail
                            .filter(detail => detail.orderId == cartID && detail.productId == productID)
-                           .reduce((acc, detail) => acc + detail.productPrice * detail.quantity, 0);
+                           .reduce((acc, detail) => detail.productPrice * detail.quantity, 0);
         if (isChecked) {
           this.totalquanlity += 1
           this.total += amount;

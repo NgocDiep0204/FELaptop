@@ -17,66 +17,64 @@
     </div>
 
     <!-- Update Info Modal -->
-   <!-- Update Info Modal -->
-<div v-if="showUpdateInfo" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center">
-  <div class="bg-white p-6 rounded-lg shadow-lg w-96 relative" inert>
-    <button @click="closeUpdateInfoForm" class="absolute top-2 right-2 text-gray-500 hover:text-gray-800">
-      ✖
-    </button>
-    <h3 class="text-lg font-bold mb-4">Cập nhật thông tin</h3>
-    <form @submit.prevent="updateUserInfo">
-      <div class="mb-4">
-        <label class="block font-semibold mb-1">Họ tên:</label>
-        <input v-model="editUser.fullName" class="w-full border border-gray-300 rounded p-2" />
-      </div>
-      <div class="mb-4">
-        <label class="block font-semibold mb-1">Số điện thoại:</label>
-        <input v-model="editUser.phoneNumber" class="w-full border border-gray-300 rounded p-2" />
-      </div>
-      <div class="mb-4">
-        <label class="block font-semibold mb-1">Địa chỉ:</label>
-        <input v-model="editUser.address" class="w-full border border-gray-300 rounded p-2" />
-      </div>
-      <div class="flex justify-end space-x-2">
-        <button type="button" @click="closeUpdateInfoForm" class="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600">
-          Hủy
+    <div v-if="showUpdateInfo" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center">
+      <div class="bg-white p-6 rounded-lg shadow-lg w-96 relative">
+        <button @click="closeUpdateInfoForm" class="absolute top-2 right-2 text-gray-500 hover:text-gray-800">
+          ✖
         </button>
-        <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
-          Lưu
-        </button>
+        <h3 class="text-lg font-bold mb-4">Cập nhật thông tin</h3>
+        <form @submit.prevent="updateUserInfo">
+          <div class="mb-4">
+            <label class="block font-semibold mb-1">Họ tên:</label>
+            <input v-model="editUser.fullName" class="w-full border border-gray-300 rounded p-2" />
+          </div>
+          <div class="mb-4">
+            <label class="block font-semibold mb-1">Số điện thoại:</label>
+            <input v-model="editUser.phoneNumber" class="w-full border border-gray-300 rounded p-2" />
+          </div>
+          <div class="mb-4">
+            <label class="block font-semibold mb-1">Địa chỉ:</label>
+            <input v-model="editUser.address" class="w-full border border-gray-300 rounded p-2" />
+          </div>
+          <div class="flex justify-end space-x-2">
+            <button type="button" @click="closeUpdateInfoForm" class="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600">
+              Hủy
+            </button>
+            <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+              Lưu
+            </button>
+          </div>
+        </form>
       </div>
-    </form>
-  </div>
-</div>
+    </div>
 
-<!-- Change Password Modal -->
-<div v-if="showChangePassword" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center">
-  <div class="bg-white p-6 rounded-lg shadow-lg w-96 relative" inert>
-    <button @click="closeChangePasswordForm" class="absolute top-2 right-2 text-gray-500 hover:text-gray-800">
-      ✖
-    </button>
-    <h3 class="text-lg font-bold mb-4">Đổi mật khẩu</h3>
-    <form @submit.prevent="changeUserPassword(user)">
-      <div class="mb-4">
-        <label class="block font-semibold mb-1">Mật khẩu cũ:</label>
-        <input type="password" v-model="password.currentPassword" class="w-full border border-gray-300 rounded p-2" />
-      </div>
-      <div class="mb-4">
-        <label class="block font-semibold mb-1">Mật khẩu mới:</label>
-        <input type="password" v-model="password.newPassword" class="w-full border border-gray-300 rounded p-2" />
-      </div>
-      <div class="flex justify-end space-x-2">
-        <button type="button" @click="closeChangePasswordForm" class="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600">
-          Hủy
+    <!-- Change Password Modal -->
+    <div v-if="showChangePassword" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center">
+      <div class="bg-white p-6 rounded-lg shadow-lg w-96 relative">
+        <button @click="closeChangePasswordForm" class="absolute top-2 right-2 text-gray-500 hover:text-gray-800">
+          ✖
         </button>
-        <button type="submit" class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600">
-          Đổi mật khẩu
-        </button>
+        <h3 class="text-lg font-bold mb-4">Đổi mật khẩu</h3>
+        <form @submit.prevent="changeUserPassword(user)">
+          <div class="mb-4">
+            <label class="block font-semibold mb-1">Mật khẩu cũ:</label>
+            <input type="password" v-model="password.currentPassword" class="w-full border border-gray-300 rounded p-2" />
+          </div>
+          <div class="mb-4">
+            <label class="block font-semibold mb-1">Mật khẩu mới:</label>
+            <input type="password" v-model="password.newPassword" class="w-full border border-gray-300 rounded p-2" />
+          </div>
+          <div class="flex justify-end space-x-2">
+            <button type="button" @click="closeChangePasswordForm" class="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600">
+              Hủy
+            </button>
+            <button type="submit" class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600">
+              Đổi mật khẩu
+            </button>
+          </div>
+        </form>
       </div>
-    </form>
-  </div>
-</div>
-
+    </div>
   </div>
 </template>
   <script>
