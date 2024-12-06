@@ -72,7 +72,7 @@ export default {
     },
     async mounted() {
       await this.GetCart(this.$route.params.id).then(() => {
-        this.GetCartDetail(this.cart[0].orderId).then(() =>{
+        this.GetCartDetail(this.cart.orderId).then(() =>{
           console.log("Carthhh:", );
           console.log("CartDetail loaded:", this.cartdetail);
         })
@@ -110,7 +110,7 @@ export default {
 
       addClick(productId) {
             const product = this.products.find(product => product.productId === productId);
-            const detail = this.cartdetail?.find(detail => detail.orderId === this.cart[0].orderId && detail.productId === productId);
+            const detail = this.cartdetail?.find(detail => detail.orderId === this.cart.orderId && detail.productId === productId);
             if (detail) {
             if(detail.quantity < product.quantity){
               detail.quantity++;
@@ -123,33 +123,35 @@ export default {
           }
         },
         minusClick( productId) {
-          const detail = this.cartdetail?.find(detail => detail.orderId === this.cart[0].orderId && detail.productId === productId);
+          const detail = this.cartdetail?.find(detail => detail.orderId === this.cart.orderId && detail.productId === productId);
 
             if(detail.quantity > 1) {
               detail.quantity--;
             this.updateCartDetail(detail.orderId, productId, detail.quantity);
             
             }else if(detail.quantity === 1) {
-              const userConfirmed = confirm("Are you sure you want to delete this item from the cart?");
-              if (userConfirmed) {
-                this.deleteCartDetail(detail.orderId, productId);
-              }
+              this.deleteCartDetail(detail.orderId, productId);
             }
         },
 
         async deleteCartDetail(cartID, productID) {
-          const response = await axiosClient.delete(`OrderDetail/DeleteCartDetails?orderId=${cartID}&productId=${productID}`);
-          const detail = this.cartdetail.find(detail => detail.orderId === cartID && detail.productId === productID);
-          console.log("Detddddail:", detail);
-          if (response.status === 200) {
-              if (detail) {
-                  const index = this.cartdetail.findIndex(d => d.orderId === cartID && d.productId === productID);
-                  if (index !== -1) {
-                      this.cartdetail.splice(index, 1);
-                  }
-              } 
-          }
-      },
+    const userConfirmed = window.confirm("Are you sure you want to delete this item from the cart?");
+
+    if (userConfirmed) {
+        const response = await axiosClient.delete(`OrderDetail/DeleteCartDetails?orderId=${cartID}&productId=${productID}`);
+        const detail = this.cartdetail.find(detail => detail.orderId === cartID && detail.productId === productID);
+        console.log("Detddddail:", detail);
+        if (response.status === 200) {
+            if (detail) {
+                const index = this.cartdetail.findIndex(d => d.orderId === cartID && d.productId === productID);
+                if (index !== -1) {
+                    this.cartdetail.splice(index, 1);
+                }
+            } 
+        }
+    }
+},
+
 
 
         async checkClick(cartID, productID, event) {

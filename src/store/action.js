@@ -31,7 +31,7 @@ export async function GetProductDetail({ commit}, productId){
 export async function GetCart({ commit}, userid){
     try {
         const response = await axiosClient.get(`Order/GetCart?userId=${userid}`);
-        commit('Set_Cart', response.data);
+        commit('Set_Cart', response.data.cart);
     } catch (error) {
         console.log(error);
     }

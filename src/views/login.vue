@@ -20,7 +20,8 @@
             </form>
            
             <div class="mt-5 text-xs border-b border-[#002D74] py-4 text-[#002D74]">
-                <a href="#">Forgot your password?</a>
+                <router-link :to="{name:'register'}">Register?</router-link>
+               
             </div>
           </div >
           <div class="w-1/2 p-8 items-center pt-10">

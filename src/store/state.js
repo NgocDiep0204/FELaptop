@@ -3,7 +3,7 @@ const state = {
     username : null,
     products : [],
     productdetail : null,
-    cart : [],
+    cart : null,
     cartdetail : [],
 };
 export default state;
